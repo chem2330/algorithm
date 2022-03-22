@@ -1,0 +1,18 @@
+def solution(id_list, report, k):
+    answer = [0] * len(id_list)
+    new_id_list = {}
+    for id in id_list:
+        new_id_list[id] = []
+    for tmp in list(set(report)):
+        x, y = tmp.split(' ')
+        for i in range(len(id_list)):
+            if x == id_list[i]:
+                x_idx = i
+                break
+        new_id_list[y].append(x_idx)
+    for i in new_id_list.values():
+        if len(i) >= k:
+            for j in i:
+                answer[j] += 1
+
+    return answer
