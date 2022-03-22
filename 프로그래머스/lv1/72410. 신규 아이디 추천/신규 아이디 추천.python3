@@ -1,0 +1,33 @@
+def solution(new_id):
+    answer = ''
+    level1 = new_id.lower()
+    
+    level2 = ''
+    for char in level1:
+        if char.isalpha() or char.isnumeric() or char in '-_.':
+            level2 += char
+    
+    level3 = ''
+    for i in range(len(level2)):
+        if len(level3) == 0 and level2[i] == '.':
+            pass
+        elif level2[i] == '.' and level3[-1] == '.':
+            pass
+        else:
+            level3 += level2[i]
+    if level3 and level3[-1] == '.':
+        level3 = level3[:-1]
+    if not level3:
+        level3 = 'a'
+    if len(level3) >= 16:
+        level3 = level3[:15]
+    if level3[-1] == '.':
+        level3 = level3[:-1]
+    
+    answer = level3
+    if len(answer) <= 2:
+        while len(answer) < 3:
+            answer += level3[-1]
+    
+    
+    return answer
