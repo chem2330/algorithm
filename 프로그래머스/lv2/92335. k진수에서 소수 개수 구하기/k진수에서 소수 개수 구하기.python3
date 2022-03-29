@@ -2,7 +2,7 @@ def solution(n, k):
     answer = 0
     prime_list = []
     tmp = ''
-    while n >= k:
+    while n:
         if n % k != 0:
             tmp += str(n % k)
         else:
@@ -10,10 +10,8 @@ def solution(n, k):
                 prime_list += [tmp]
                 tmp = ''
         n = n // k
-    if n != 0:
-        tmp += str(n)
     prime_list += [tmp]
-        
+    
     for is_prime in prime_list:
         if is_prime != '1':
             is_prime = int(is_prime[::-1])
