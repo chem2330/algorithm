@@ -1,0 +1,19 @@
+def solution(N, stages):
+    up = [0] * 501
+    down = [0] * 501
+    
+    for stage in stages:
+        up[stage - 1] += 1
+        for i in range(stage):
+            down[i] += 1
+            
+    fail_per = []
+    for k in range(N):
+        if down[k] == 0:
+            fail_per += [[k + 1, 0]]
+        else:
+            fail_per += [[k + 1, up[k] / down[k]]]
+            
+    result = sorted(fail_per, key=lambda x : x[1], reverse=True)
+    answer = [result[i][0] for i in range(len(result))]
+    return answer
