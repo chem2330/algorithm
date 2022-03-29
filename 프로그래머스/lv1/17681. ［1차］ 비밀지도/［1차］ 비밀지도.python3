@@ -1,0 +1,15 @@
+def solution(n, arr1, arr2):
+    binary = []
+    for i in range(n):
+        binary += [format(arr1[i] | arr2[i], 'b')]
+    answer = []
+    for elem in binary:
+        tmp = ' ' * (n - len(elem))
+        for e in elem:
+            if e == '1':
+                tmp += '#'
+            else:
+                tmp += ' '
+        answer += [tmp]
+
+    return answer
