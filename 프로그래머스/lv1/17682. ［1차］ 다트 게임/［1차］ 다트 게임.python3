@@ -1,0 +1,28 @@
+def solution(dartResult):
+    nums = [0] * 3
+    multi = [1] * 3
+    idx = -1
+    info = {'S': 1, 'D': 2, 'T': 3}
+    tmp = 0
+    for char in dartResult:
+        if char.isnumeric():
+            if tmp == 0:
+                idx += 1
+                tmp = int(char)
+            else:
+                tmp = 10
+        elif char in 'SDT':
+            nums[idx] = tmp ** info[char]
+            tmp = 0
+        else:
+            if char == '*':
+                nums[idx] *= 2
+                if idx - 1 >= 0:
+                    nums[idx - 1] *= 2
+            else:
+                nums[idx] *= -1
+
+    answer = 0
+    for k in range(3):
+        answer += nums[k] * multi[k]
+    return answer
