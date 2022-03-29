@@ -1,0 +1,27 @@
+def solution(n, k):
+    answer = 0
+    prime_list = []
+    tmp = ''
+    while n >= k:
+        if n % k != 0:
+            tmp += str(n % k)
+        else:
+            if tmp:
+                prime_list += [tmp]
+                tmp = ''
+        n = n // k
+    if n != 0:
+        tmp += str(n)
+    prime_list += [tmp]
+        
+    for is_prime in prime_list:
+        if is_prime != '1':
+            is_prime = int(is_prime[::-1])
+            for i in range(2, int(is_prime ** 0.5) + 1):
+                if is_prime % i == 0:
+                    break
+            else:
+                answer += 1
+                    
+    
+    return answer
