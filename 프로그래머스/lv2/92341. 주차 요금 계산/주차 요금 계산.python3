@@ -1,0 +1,35 @@
+import math
+
+
+def solution(fees, records):
+    stack = {}
+    car_time = {}
+    for record in records:
+        time, num, I_O = record.split()
+        if I_O == 'IN':
+            stack[num] = time
+        else:
+            in_time = stack[num]
+            stack.pop(num)
+            if car_time.get(num):
+                car_time[num] += (int(time[:2]) * 60 + int(time[3:])) - (int(in_time[:2]) * 60 + int(in_time[3:]))
+            else:
+                car_time[num] = (int(time[:2]) * 60 + int(time[3:])) - (int(in_time[:2]) * 60 + int(in_time[3:]))
+    for v in stack.items():
+        if car_time.get(v[0]):
+                car_time[v[0]] += (23 * 60 + 59) - (int(v[1][:2]) * 60 + int(v[1][3:]))
+        else:
+            car_time[v[0]] = (23 * 60 + 59) - (int(v[1][:2]) * 60 + int(v[1][3:]))
+    
+    time1, fee1, time2, fee2 = fees
+    answer = []
+    for car in sorted(car_time.items()):
+        n, t = car
+        if t <= time1:
+            answer += [fee1]
+        else:
+            answer += [fee1 + math.ceil((t - time1)/time2)  * fee2]
+        
+    
+    
+    return answer
