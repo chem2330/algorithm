@@ -1,0 +1,49 @@
+def solution(n, info):
+    apeach = 0
+    for i in range(9):
+        if info[i]:
+            apeach += (10 - i)
+
+    max_total = 0
+    max_arr = []
+
+    def Ryan(arrow_num, arr, idx, total):
+        nonlocal max_total, max_arr
+        if idx == 10:
+            if total - apeach > max_total:
+                max_total = total - apeach
+                tmp = arr[:]
+                if sum(tmp) != n:
+                    tmp[10] = n - sum(tmp)
+                max_arr = tmp
+            elif max_total > 0 and total - apeach == max_total:
+                tmp = arr[:]
+                if sum(tmp) != n:
+                    tmp[10] = n - sum(tmp)
+                k = 10
+                while k > 0:
+                    if tmp[k] > max_arr[k]:
+                        max_arr = tmp
+                        return
+                    elif tmp[k] < max_arr[k]:
+                        return
+                    k -= 1
+            return
+
+        Ryan(arrow_num, arr, idx + 1, total)
+        if arrow_num > info[idx]:
+            if info[idx] == 0:
+                arr[idx] = info[idx] + 1
+                Ryan(arrow_num - (info[idx] + 1), arr, idx + 1, total + (10 - idx))
+                arr[idx] = 0
+            else:
+                arr[idx] = info[idx] + 1
+                Ryan(arrow_num - (info[idx] + 1), arr, idx + 1, total + 2 * (10 - idx))
+                arr[idx] = 0
+        return
+
+    Ryan(n, [0] * 11, 0, 0)
+    if max_total <= 0:
+        return [-1]
+    else:
+        return max_arr
