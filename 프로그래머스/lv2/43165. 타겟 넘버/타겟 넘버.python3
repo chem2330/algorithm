@@ -1,0 +1,12 @@
+import itertools
+
+def solution(numbers, target):
+    answer = 0
+    com_list = list(itertools.product([1, -1], repeat=len(numbers)))
+    for com in com_list:
+        total = 0
+        for i in range(len(com)):
+            total += com[i] * numbers[i]
+        if total == target:
+            answer += 1
+    return answer
