@@ -1,0 +1,23 @@
+def solution(answers):
+    score = [0, 0, 0]
+    person1 = person2 = person3 = 0
+    tmp2 = [2, 1, 2, 3, 2, 4, 2, 5]
+    tmp3 = [3, 1, 2, 4, 5]
+    answer = []
+    
+    for i, ans in enumerate(answers):
+        if ans == i % 5 + 1:
+            score[0] += 1
+        
+        if ans == tmp2[i % 8]:
+            score[1] += 1
+            
+        if ans == tmp3[(i // 2) % 5]:
+            score[2] += 1
+    
+    for i in range(3):
+        if score[i] == max(score):
+            answer.append(i + 1)
+    
+    
+    return answer
