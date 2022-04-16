@@ -1,0 +1,16 @@
+def solution(n, computers):
+    network = [0] * n
+    tmp = 0
+    for i in range(n):
+        if network[i] == 0:
+            stack = [i]
+            tmp += 1
+            while stack:
+                v = stack.pop()
+                network[v] = tmp
+                for k in range(n):
+                    if computers[v][k] == 1 and network[k] == 0:
+                        network[k] = tmp
+                        stack.append(k)
+                
+    return tmp
