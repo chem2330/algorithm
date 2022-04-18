@@ -1,0 +1,31 @@
+import itertools
+
+def check(persons, place):
+    coms = itertools.combinations(persons, 2)
+    for ([x1, y1], [x2, y2]) in coms:
+        if abs(x1 - x2) + abs(y1 - y2) <= 1:
+            return 0
+        elif abs(x1 - x2) + abs(y1 - y2) == 2:
+            if x1 == x2:
+                if place[x1][min(y1, y2) + 1] != 'X':
+                    return 0
+            elif y1 == y2:
+                if place[min(x1, x2) + 1][y1] != 'X':
+                    return 0
+            else:
+                if place[x1][y2] != 'X' or place[x2][y1] != 'X':
+                    return 0
+    return 1
+                    
+                
+
+def solution(places):
+    answer = []
+    for place in places:
+        persons = []
+        for i, line in enumerate(place):
+            for j, per  in enumerate(line):
+                if per == 'P':
+                    persons.append([i, j])
+        answer.append(check(persons, place))
+    return answer
