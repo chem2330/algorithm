@@ -1,0 +1,37 @@
+def solution(n, k, cmd):
+    answer = ['O'] * n
+
+    pre = [-1] + list(range(0, n-1))
+    next = list(range(1, n)) + [-1]
+    stack = []
+    for move in cmd:
+        if move == 'C':
+            stack.append(k)
+            answer[k] = 'X'
+            if pre[k] != -1:
+                next[pre[k]] = next[k]
+            if next[k] != -1:
+                pre[next[k]] = pre[k]
+            if next[k] == -1:
+                k = pre[k]
+            else:
+                k = next[k]
+
+        elif move == 'Z':
+            tmp = stack.pop()
+            answer[tmp] = 'O'
+            if pre[tmp] != -1:
+                next[pre[tmp]] = tmp
+            if next[tmp] != -1:
+                pre[next[tmp]] = tmp
+
+        else:
+            direct, distance = move.split()
+            if direct == 'D':
+                for _ in range(int(distance)):
+                    k = next[k]
+            else:
+                for _ in range(int(distance)):
+                    k = pre[k]
+
+    return ''.join(answer)
