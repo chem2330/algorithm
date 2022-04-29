@@ -1,0 +1,285 @@
+def solution(expression):
+    expression_list = []
+    tmp = 0
+    for express in expression:
+        if express.isnumeric():
+            tmp = tmp * 10 + int(express)
+        else:
+            expression_list.append(tmp)
+            expression_list.append(express)
+            tmp = 0
+    expression_list.append(tmp)
+    # print(expression_list) = [100, '-', 200, '*', 300, '-', 500, '+', '20']
+
+    answer = 0
+    # 1. + - *
+    tmp = []
+    stack = []
+    for exp in expression_list:
+        if type(exp) == int:
+            tmp.append(exp)
+
+        else:
+            if not stack:
+                stack.append(exp)
+            elif exp == '+':
+                while stack and stack[-1] == '+':
+                    tmp += stack.pop()
+                stack.append(exp)
+            elif exp == '-':
+                while stack and (stack[-1] == '+' or stack[-1] == '-'):
+                    tmp += stack.pop()
+                stack.append(exp)
+            elif exp == '*':
+                while stack:
+                    tmp += stack.pop()
+                stack.append(exp)
+
+    while stack:
+        tmp += stack.pop()
+
+    stack = []
+
+    for token in tmp:
+        if type(token) == int:
+            stack.append(int(token))
+        else:
+            p1 = stack.pop()
+            p2 = stack.pop()
+            if token == '+':
+                stack.append(p2 + p1)
+            elif token == '-':
+                stack.append(p2 - p1)
+            elif token == '*':
+                stack.append(p2 * p1)
+    ans = stack.pop()
+
+    if abs(ans) >= answer:
+        answer = abs(ans)
+
+    # 2. + * -
+    tmp = []
+    stack = []
+    for exp in expression_list:
+        if type(exp) == int:
+            tmp.append(exp)
+
+        else:
+            if not stack:
+                stack.append(exp)
+            elif exp == '+':
+                while stack and stack[-1] == '+':
+                    tmp += stack.pop()
+                stack.append(exp)
+            elif exp == '*':
+                while stack and (stack[-1] == '+' or stack[-1] == '*'):
+                    tmp += stack.pop()
+                stack.append(exp)
+            elif exp == '-':
+                while stack:
+                    tmp += stack.pop()
+                stack.append(exp)
+
+    while stack:
+        tmp += stack.pop()
+
+    stack = []
+
+    for token in tmp:
+        if type(token) == int:
+            stack.append(int(token))
+        else:
+            p1 = stack.pop()
+            p2 = stack.pop()
+            if token == '+':
+                stack.append(p2 + p1)
+            elif token == '-':
+                stack.append(p2 - p1)
+            elif token == '*':
+                stack.append(p2 * p1)
+    ans = stack.pop()
+
+    if abs(ans) >= answer:
+        answer = abs(ans)
+
+    # 3. - + *
+    tmp = []
+    stack = []
+    for exp in expression_list:
+        if type(exp) == int:
+            tmp.append(exp)
+
+        else:
+            if not stack:
+                stack.append(exp)
+            elif exp == '-':
+                while stack and stack[-1] == '-':
+                    tmp += stack.pop()
+                stack.append(exp)
+            elif exp == '+':
+                while stack and (stack[-1] == '+' or stack[-1] == '-'):
+                    tmp += stack.pop()
+                stack.append(exp)
+            elif exp == '*':
+                while stack:
+                    tmp += stack.pop()
+                stack.append(exp)
+
+    while stack:
+        tmp += stack.pop()
+
+    stack = []
+
+    for token in tmp:
+        if type(token) == int:
+            stack.append(int(token))
+        else:
+            p1 = stack.pop()
+            p2 = stack.pop()
+            if token == '+':
+                stack.append(p2 + p1)
+            elif token == '-':
+                stack.append(p2 - p1)
+            elif token == '*':
+                stack.append(p2 * p1)
+    ans = stack.pop()
+
+    if abs(ans) >= answer:
+        answer = abs(ans)
+
+    # 4. - * +
+    tmp = []
+    stack = []
+    for exp in expression_list:
+        if type(exp) == int:
+            tmp.append(exp)
+
+        else:
+            if not stack:
+                stack.append(exp)
+            elif exp == '-':
+                while stack and stack[-1] == '-':
+                    tmp += stack.pop()
+                stack.append(exp)
+            elif exp == '*':
+                while stack and (stack[-1] == '*' or stack[-1] == '-'):
+                    tmp += stack.pop()
+                stack.append(exp)
+            elif exp == '+':
+                while stack:
+                    tmp += stack.pop()
+                stack.append(exp)
+
+    while stack:
+        tmp += stack.pop()
+
+    stack = []
+
+    for token in tmp:
+        if type(token) == int:
+            stack.append(int(token))
+        else:
+            p1 = stack.pop()
+            p2 = stack.pop()
+            if token == '+':
+                stack.append(p2 + p1)
+            elif token == '-':
+                stack.append(p2 - p1)
+            elif token == '*':
+                stack.append(p2 * p1)
+    ans = stack.pop()
+
+    if abs(ans) >= answer:
+        answer = abs(ans)
+
+    # 5. * + -
+    tmp = []
+    stack = []
+    for exp in expression_list:
+        if type(exp) == int:
+            tmp.append(exp)
+
+        else:
+            if not stack:
+                stack.append(exp)
+            elif exp == '*':
+                while stack and stack[-1] == '*':
+                    tmp += stack.pop()
+                stack.append(exp)
+            elif exp == '+':
+                while stack and (stack[-1] == '+' or stack[-1] == '*'):
+                    tmp += stack.pop()
+                stack.append(exp)
+            elif exp == '-':
+                while stack:
+                    tmp += stack.pop()
+                stack.append(exp)
+
+    while stack:
+        tmp += stack.pop()
+
+    stack = []
+
+    for token in tmp:
+        if type(token) == int:
+            stack.append(int(token))
+        else:
+            p1 = stack.pop()
+            p2 = stack.pop()
+            if token == '+':
+                stack.append(p2 + p1)
+            elif token == '-':
+                stack.append(p2 - p1)
+            elif token == '*':
+                stack.append(p2 * p1)
+    ans = stack.pop()
+
+    if abs(ans) >= answer:
+        answer = abs(ans)
+
+    # 6. * - +
+    tmp = []
+    stack = []
+    for exp in expression_list:
+        if type(exp) == int:
+            tmp.append(exp)
+
+        else:
+            if not stack:
+                stack.append(exp)
+            elif exp == '*':
+                while stack and stack[-1] == '*':
+                    tmp += stack.pop()
+                stack.append(exp)
+            elif exp == '-':
+                while stack and (stack[-1] == '-' or stack[-1] == '*'):
+                    tmp += stack.pop()
+                stack.append(exp)
+            elif exp == '+':
+                while stack:
+                    tmp += stack.pop()
+                stack.append(exp)
+
+    while stack:
+        tmp += stack.pop()
+
+    stack = []
+
+    for token in tmp:
+        if type(token) == int:
+            stack.append(int(token))
+        else:
+            p1 = stack.pop()
+            p2 = stack.pop()
+            if token == '+':
+                stack.append(p2 + p1)
+            elif token == '-':
+                stack.append(p2 - p1)
+            elif token == '*':
+                stack.append(p2 * p1)
+    ans = stack.pop()
+
+    if abs(ans) >= answer:
+        answer = abs(ans)
+
+    return answer
