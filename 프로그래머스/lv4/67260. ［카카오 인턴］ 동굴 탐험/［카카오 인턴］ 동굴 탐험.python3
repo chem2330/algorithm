@@ -1,0 +1,44 @@
+def solution(n, path, order):
+    arr = [[] for _ in range(n)]
+    for s, e in path:
+        arr[s].append(e)
+        arr[e].append(s)
+    # print(arr) = [[1, 3, 7], [0, 8, 2], [1], [0, 6], [7], [7], [3], [0, 4, 5], [1]]
+
+    check_order = [0] * n
+    for s, e in order:
+        check_order[e] = s
+    # print(check_order) = [0, 4, 0, 0, 0, 8, 0, 6, 0]
+
+    visited = [0] * n
+    stack = [0]
+    after_visit = {}
+
+    while stack:
+        v = stack.pop()
+        if check_order[v]:
+            if visited[check_order[v]]:
+                visited[v] = 1
+                for i in arr[v]:
+                    if visited[i] == 0:
+                        visited[i] = 1
+                        stack.append(i)
+            else:
+                after_visit[check_order[v]] = v
+
+        else:
+            visited[v] = 1
+            for i in arr[v]:
+                if visited[i] == 0:
+                    visited[i] = 1
+                    stack.append(i)
+
+        if v in after_visit:
+            stack.append(after_visit[v])
+
+    if min(visited) == 0:
+        answer = False
+    else:
+        answer = True
+
+    return answer
