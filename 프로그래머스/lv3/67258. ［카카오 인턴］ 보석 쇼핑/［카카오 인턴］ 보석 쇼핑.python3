@@ -1,0 +1,29 @@
+def solution(gems):
+    answer = [1, len(gems) + 1]
+    min_result = len(gems)
+    gem_count = len(set(gems))
+
+    start = end = 0
+    check_dict = {}
+
+    while end < len(gems):
+        if gems[end] not in check_dict:
+            check_dict[gems[end]] = 1
+        else:
+            check_dict[gems[end]] += 1
+
+        if len(check_dict) == gem_count:
+            while start <= end:
+                if check_dict[gems[start]] > 1:
+                    check_dict[gems[start]] -= 1
+                    start += 1
+                elif end - start < min_result:
+                    min_result = end - start
+                    answer = [start + 1, end + 1]
+                    break
+                else:
+                    break
+        end += 1
+
+
+    return answer
