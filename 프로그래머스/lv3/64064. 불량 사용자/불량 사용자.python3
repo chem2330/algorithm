@@ -1,0 +1,33 @@
+def solution(user_id, banned_id):
+    banned_list = [[] for _ in range(len(banned_id))]
+    for idx, banned in enumerate(banned_id):
+        for user in user_id:
+            if len(banned) == len(user):
+                flag = 0
+                for i in range(len(banned)):
+                    if banned[i] != '*' and banned[i] != user[i]:
+                        flag = 1
+                        break
+                if flag == 0:
+                    banned_list[idx].append(user)
+    # print(banned_list) = [['frodo', 'fradi'], ['abc123']]
+
+    answer_set = set()
+
+    def bfs(i, banned_case):
+        if i == len(banned_id):
+            answer_set.add(tuple(sorted(banned_case)))
+            return
+        for i_banned in banned_list[i]:
+            if i_banned not in banned_case:
+                bfs(i + 1, banned_case + [i_banned])
+        return
+
+    bfs(0, [])
+    # print(answer_list)
+    # answer = len(answer_list)
+    # for i in range(len(answer_list) - 1):
+    #     if answer_list[i] == answer_list[i + 1]:
+    #         answer -= 1
+
+    return len(answer_set)
