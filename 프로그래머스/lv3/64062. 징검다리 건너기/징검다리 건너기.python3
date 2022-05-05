@@ -1,0 +1,24 @@
+def solution(stones, k):
+    answer = 0
+    left = 1
+    right = max(stones)
+    
+    while left <= right:
+        mid = (right + left) // 2  # 건널 수 있는 사람 수를 이진 탐색
+        jump = 0
+        for stone in stones:
+            if stone - mid > 0:  # mid명이 지나갔을 때 stone이 남아 있음 -> 건널 수 있음
+                jump = 0
+            else:  # stone이 남아있지 않음 -> jump 해야함
+                jump += 1
+
+            if jump >= k:
+                break
+
+        if jump < k:
+            left = mid + 1
+        else:
+            answer = mid
+            right = mid - 1
+
+    return answer
