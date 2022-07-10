@@ -1,8 +1,3 @@
-import sys
-
-
-input = sys.stdin.readline
-
 N = int(input())  # 노드의 수
 arr = [[] for _ in range(N + 1)]
 
