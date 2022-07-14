@@ -1,3 +1,8 @@
+import sys
+
+
+input = sys.stdin.readline
+
 k = int(input())  # 트리의 높이
 arr = [0, 0] + list(map(int, input().split()))
 # print(arr) = [0, 0, 2, 2, 2, 1, 1, 3]
