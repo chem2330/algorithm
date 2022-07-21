@@ -19,9 +19,10 @@ for _ in range(N):
 
 
 def order(node):
+    global tmp
     if node:
         order(C1[node])
-        tmp.append(node)
+        tmp = node
         order(C2[node])
 
 
@@ -32,13 +33,13 @@ def inorder(node):
         inorder(C1[node])
     elif C2[node] and visited[C2[node]] == 0:
         inorder(C2[node])
-    elif node == tmp[-1]:
+    elif node == tmp:
         return
     elif P[node]:
         inorder(P[node])
 
 
-tmp = []
+tmp = 1
 order(1)
 visited = [0] * (N + 1)
 answer = []
