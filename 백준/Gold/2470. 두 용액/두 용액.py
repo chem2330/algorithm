@@ -11,7 +11,6 @@ arr.sort()
 solution = 10000000000
 start = 0
 end = N - 1
-ans = [0, 0]
 
 while start < end:
     if abs(arr[start] + arr[end]) < solution:
