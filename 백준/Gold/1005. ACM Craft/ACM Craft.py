@@ -1,17 +1,18 @@
 import sys
 from collections import deque
  
-T=int(sys.stdin.readline())
- 
+input = sys.stdin.readline
+
+T = int(input())
 for _ in range(T):
-    N,K=map(int,sys.stdin.readline().split())#건물수, 건설순서규칙
-    time=[0]+list(map(int,sys.stdin.readline().split()))#건물들의 건설시간
+    N,K=map(int, input().split())#건물수, 건설순서규칙
+    time=[0]+list(map(int,input().split()))#건물들의 건설시간
     seq=[[] for _ in range(N+1)]#건설순서규칙
     inDegree=[0 for _ in range(N+1)]#진입차수
     DP=[0 for _ in range(N+1)]#해당 건물까지 걸리는 시간
  
     for _ in range(K):#건설순서규칙 저장
-        a,b=map(int,sys.stdin.readline().split())
+        a,b=map(int,input().split())
         seq[a].append(b)
         inDegree[b]+=1
  
@@ -30,5 +31,5 @@ for _ in range(T):
                 q.append(i)
  
  
-    ans=int(sys.stdin.readline())
+    ans=int(input())
     print(DP[ans])
