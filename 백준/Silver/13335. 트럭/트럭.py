@@ -9,10 +9,11 @@ while True:
     if i == n:
         ans += w
         break
-    if sum(tmp[1:]) + arr[i] <= L:
-        tmp = tmp[1:] + [arr[i]]
+    tmp = tmp[1:]
+    if sum(tmp) + arr[i] <= L:
+        tmp.append(arr[i])
         i += 1
     else:
-        tmp = tmp[1:] + [0]
+        tmp.append(0)
     ans += 1
 print(ans)
