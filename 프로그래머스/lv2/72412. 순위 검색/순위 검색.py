@@ -3,41 +3,46 @@ from itertools import combinations
 
 def solution(info, query):
     answer = []
-    db = {}
-    for i in info:                   # info에 대해 반복
-        temp = i.split()
-        conditions = temp[:-1]       # 조건들만 모으고, 점수 따로
-        score = int(temp[-1])  
-        for n in range(5):           # 조건들에 대해 조합을 이용해서  
-            combi = list(combinations(range(4), n))
-            for c in combi:
-                t_c = conditions.copy()
-                for v in c:          # '-'를 포함한 새로운 조건을 만들어냄.
-                    t_c[v] = '-'
-                changed_t_c = '/'.join(t_c)
-                if changed_t_c in db:     # 모든 조건의 경우에 수에 대해 딕셔너리
-                    db[changed_t_c].append(score)
+    info_dict = {}
+    
+    for i in info:
+        tmp = i.split()
+        choose = tmp[:-1]  # 점수 제외
+        score = int(tmp[-1])  # 점수
+        
+        for j in range(5):
+            for c in list(combinations(choose, j)):
+                tmp = ''.join(c)
+                if tmp in info_dict:  # 점수제외 : 점수 형식으로 딕셔너리 저장
+                    info_dict[tmp].append(score)
                 else:
-                    db[changed_t_c] = [score]
-
-    for value in db.values():             # 딕셔너리 내 모든 값 정렬
+                    info_dict[tmp] = [score]
+    
+    for value in info_dict.values():  # 점수 기준으로 오름차순
         value.sort()
     
-    for q in query:                       # query의 모든 조건에 대해서
-        qry = [i for i in q.split() if i != 'and']
-        qry_cnd = '/'.join(qry[:-1])
+    for q in query:
+        qry = q.split()
+        qry_choose = qry[:-1]
         qry_score = int(qry[-1])
-        if qry_cnd in db:                 # 딕셔너리 내에 값이 존재한다면,
-            data = db[qry_cnd]
-            if len(data) > 0:          
-                start, end = 0, len(data)     # lower bound 알고리즘 통해 인덱스 찾고,
+        
+        while 'and' in qry_choose:  # and 제거
+            qry_choose.remove('and')
+        while '-' in qry_choose:  # - 제거
+            qry_choose.remove('-')
+        qry_choose = ''.join(qry_choose) 
+        
+        if qry_choose in info_dict:
+            data = info_dict[qry_choose]  # 조건일때 점수들 찾기
+            if len(data) > 0:  # 이분 탐색
+                start, end = 0, len(data)
                 while start != end and start != len(data):
                     if data[(start + end) // 2] >= qry_score:
                         end = (start + end) // 2
                     else:
                         start = (start + end) // 2 + 1
-                answer.append(len(data) - start)      # 해당 인덱스부터 끝까지의 갯수가 정답
-        else:
+                answer.append(len(data) - start)
+        else:  # 없는 경우 0
             answer.append(0)
 
     return answer
